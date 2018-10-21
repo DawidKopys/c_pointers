@@ -27,6 +27,7 @@ int push(DATA* data)
   else
   {
     memcpy(top, data, sizeof(DATA));
+    //*top = *data; - rownoważne z tym na gorze
     top = top + 1;
     ok = 1;
   }
