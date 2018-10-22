@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
   printf("size of MYSTRUCT = %d\n", sizeof(MYSTRUCT));
 
-  p = calloc(COUNT, sizeof(MYSTRUCT));
+  p = (MYSTRUCT*)calloc(COUNT, sizeof(MYSTRUCT));
 
   for(int i = 0; i < COUNT; i++)
   {

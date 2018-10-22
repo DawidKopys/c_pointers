@@ -43,7 +43,7 @@ ListItem_T* dequeue() {
         head.first = temp->next;        // set the queue header to point to the 'second' item
         head.first->prev = (ListItem_T*)&head;  // make the 'new first' item point to the queue header
     }
-    
+
     return temp;
 }
 
@@ -57,10 +57,10 @@ int main(int argc, char const *argv[])
     head.last = (ListItem_T*)&head;
 
     // populate the queue
-    
+
     for(int i = 0; i < 3; i++)
     {
-        temp = malloc(sizeof(ListItem_T));
+        temp = (ListItem_T*)malloc(sizeof(ListItem_T));
         temp->data = i;
         enqueue(temp);      // put the item in the queue
     }
