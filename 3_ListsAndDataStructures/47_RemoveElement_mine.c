@@ -76,16 +76,18 @@ LISTITEM* get_el_at(LISTHDR* queue, int index)
 
   i = 0;
   temp = queue->first;
-  while (i < index)
+  while (i < index+1)
   {
     if (temp == (LISTITEM*)&head)
     {
-      retVal = NULL;
+      temp = NULL;
       break;
     }
     temp = temp->next;
     i++;
   }
+
+  retVal = temp;
 
   return retVal;
 }
@@ -109,6 +111,8 @@ int main(int argc, char const *argv[])
     enqueue(&head, temp);
   }
 
+  //setbuf(stdout, NULL);
+
   printf("the length of the queue is %d\n", queue_length(&head));
   // print all queue elements
   temp = head.first;
@@ -122,8 +126,8 @@ int main(int argc, char const *argv[])
   // printf("enter the index of the queue entry...");
   // requested_index = atoi(gets(input));
 
-  // temp = get_el_at(&head, 2);
-  // printf("You requested item with index %d, its value: %d", requested_index, )
+  // temp = get_el_at(&head, requested_index);
+  // printf("You requested item with index %d, its value: %d", requested_index, temp->data);
   
 
   return 0;
