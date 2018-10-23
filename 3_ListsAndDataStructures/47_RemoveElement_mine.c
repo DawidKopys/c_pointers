@@ -68,49 +68,63 @@ int queue_length(LISTHDR *queue)
   return length;
 }
 
-int queue_length2(LISTHDR *queue)
+LISTITEM* get_el_at(LISTHDR* queue, int index)
 {
-  int length = 0;
-  LISTITEM *temp;
+  int i;
+  LISTITEM *temp, *retVal;
 
+
+  i = 0;
   temp = queue->first;
-  while (temp != (LISTITEM *)queue)
+  while (i < index)
   {
-    length++;
+    if (temp == (LISTITEM*)&head)
+    {
+      retVal = NULL;
+      break;
+    }
     temp = temp->next;
+    i++;
   }
 
-  return length;
+  return retVal;
 }
 
 int main(int argc, char const *argv[])
 {
   LISTITEM *temp;
+  int requested_index;
+  char input[50];
 
   // make an empty queue
-  head.first = (LISTITEM *)&head;
-  head.last = (LISTITEM *)&head;
+  head.first = (LISTITEM*)&head;
+  head.last  = (LISTITEM*)&head;
 
-  printf("At start, the length of the queue is %d\n", queue_length2(&head));
-  for (int i = 0; i < 3; i++)
-  {                                              // as before, populate the queue
-    temp = (LISTITEM *)malloc(sizeof(LISTITEM)); // allocate some memory for the new queue item
-    temp->data = i;                              // set the item's data to the loop count so that we can see where it is in the queue
-    enqueue(&head, temp);                        // and put it in the queue
+  // populate the queue
+  
+  for(int i = 0; i < 5; i++)
+  {
+    temp = (LISTITEM*)malloc(sizeof(LISTITEM));
+    temp->data = i;
+    enqueue(&head, temp);
   }
-  printf("After initialization, the length of the queue is %d\n\n", queue_length2(&head));
 
-  // see what we've got left
-  do
-  { // keep going until the queue is empty
-    printf("The length of the queue is now %d\n", queue_length2(&head));
-    temp = dequeue(&head); // if the queue is empty we will get NULL returned
-    if (temp != NULL)
-    {
-      printf("Dequeued item. Data is %d\n", temp->data);
-      free(temp); // call 'free' to tidy up
-    }
-  } while (temp != NULL);
+  printf("the length of the queue is %d\n", queue_length(&head));
+  // print all queue elements
+  temp = head.first;
+  // for(int i = 0; i < 5; i++)
+  // {
+  //   printf("element with index %d, its data: %d\n", i, temp->data);
+  //   temp = temp->next;
+  // }
+  
+  // remove at a used entered index
+  // printf("enter the index of the queue entry...");
+  // requested_index = atoi(gets(input));
+
+  // temp = get_el_at(&head, 2);
+  // printf("You requested item with index %d, its value: %d", requested_index, )
+  
 
   return 0;
 }
