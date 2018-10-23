@@ -68,45 +68,39 @@ int queue_length(LISTHDR *queue)
   return length;
 }
 
-LISTITEM* get_el_at(LISTHDR* queue, int index)
+LISTITEM* remove_at(LISTHDR* queue, int position)
 {
+  LISTITEM* temp;
   int i;
-  LISTITEM *temp, *retVal;
 
-
-  i = 0;
-  temp = queue->first;
-  while (i < index)
+  if (position < 0)
   {
-    temp = temp->next;
-    i++;
+    return NULL;
+  }
+
+  temp = queue->first;
+  i = 0;
+  do {
     if (temp == (LISTITEM*)queue)
     {
       temp = NULL;
       break;
     }
-  }
-
-  retVal = temp;
-
-  return retVal;
-}
-
-LISTITEM* remove_at(LISTHDR* queue, int index)
-{
-  LISTITEM *temp;
-
-  temp = get_el_at(queue, index);
-  if (temp != NULL)
-  {
-    temp->prev->next = temp->next;
-    temp->next->prev = temp->prev;
-    // NOTE: setting the poitners to NULL for the rmovec item isnt necessary
-    // but it might me a good idea to avoid accidental reuse of the pointers
-    // since temp's next and prev still point into elements of the queue
-    temp->next = NULL;
-    temp->prev = NULL;
-  }
+    if (i == position)
+    {
+      // remove the item that we found
+      temp->prev->next = temp->next;
+      temp->next->prev = temp->prev;
+      // NOTE: setting the poitners to NULL for the rmovec item isnt necessary
+      // but it might me a good idea to avoid accidental reuse of the pointers
+      // since temp's next and prev still point into elements of the queue
+      temp->next = NULL;
+      temp->prev = NULL;
+      break;
+    }
+    temp = temp->next;
+    i++;
+  } while (temp != NULL);
 
   return temp;
 }
